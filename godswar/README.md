@@ -1,5 +1,11 @@
 # GodsWar Online Install Script (Wine)
 
+## Game info:
+- Genre: Action, MMORPG
+- Platform: Windows 
+- Release Year: 2007
+- Website: gw.igg.com
+
 ## Install from lutris.net:
     https://lutris.net/games/godswar-online/
 
