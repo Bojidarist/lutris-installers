@@ -18,5 +18,5 @@
 2. In the "Game info" tab you can set the banner and icon.
 
 ## Known issues:
-- Some buttons in the patcher are be broken.
+- Some buttons in the patcher are broken.
 - On first log in the game may have trouble connecting to the server. To fix this try restarting the game.
