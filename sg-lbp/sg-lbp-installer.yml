@@ -1,0 +1,33 @@
+name: Steins Gate Linear Bounded Phenogram
+game_slug: steins-gate-linear-bounded-phenogram
+version: Installer
+slug: SGLBPInstaller
+runner: wine
+
+script:
+  files:
+  - installer: "N/A:Select the game's setup file"
+  game:
+    exe: $GAMEDIR/drive_c/Program Files/STEINS GATE Linear Bounded Phenogram/Launcher.exe
+    prefix: $GAMEDIR
+    arch: win32
+    working_dir: $GAMEDIR/drive_c/Program Files/STEINS GATE Linear Bounded Phenogram
+  installer:
+  - task:
+      arch: win32
+      description: Setting up wine prefix
+      name: create_prefix
+      prefix: $GAMEDIR
+  - task:
+      app: d3dx9 d3dcompiler_43 d3dx9_29 dinput8
+      arch: win32
+      description: Installing DirectX components
+      name: winetricks
+      prefix: $GAMEDIR
+  - task:
+      executable: installer
+      arch: win32
+      name: wineexec
+      prefix: $GAMEDIR
+  wine:
+    version: tkg-protonified-4.6-x86_64
