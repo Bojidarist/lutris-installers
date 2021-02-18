@@ -1,0 +1,47 @@
+results:
+  - game_slug: chronobox
+    name: ChronoBox
+    version: Installer
+    slug: ChronoBoxInstaller
+    runner: wine
+
+    script:
+      files:
+      - installer: "N/A:Select the game's setup file"
+      game:
+        exe: $GAMEDIR/drive_c/ChronoBox/ChronoBox.exe
+        prefix: $GAMEDIR
+        arch: win32
+        working_dir: $GAMEDIR/drive_c/ChronoBox
+      installer:
+      - task:
+          arch: win32
+          description: Setting up wine prefix
+          name: create_prefix
+          prefix: $GAMEDIR
+      - task:
+          app: d3dx9 d3dcompiler_43 d3dx9_29 dinput8
+          arch: win32
+          description: Installing DirectX components
+          name: winetricks
+          prefix: $GAMEDIR
+      - task:
+          app: cjkfonts
+          arch: win32
+          description: Setting up fonts
+          name: winetricks
+          prefix: $GAMEDIR
+      - task:
+          executable: installer
+          arch: win32
+          description: Installing game (Install in drive_c/Chronobox)
+          name: wineexec
+          prefix: $GAMEDIR
+      - task:
+          name: winekill
+      system:
+        env:
+          LC_ALL: ja_JP.UTF-8
+          LANG: ja_JP.UTF-8
+      wine:
+        version: tkg-protonified-4.6-x86_64
