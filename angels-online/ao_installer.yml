@@ -1,0 +1,44 @@
+name: Angels Online
+game_slug: AngelsOnline
+version: Installer
+slug: AngelsOnlineInstaller
+description: Launcher may not run on fshack versions of wine
+runner: wine
+
+script:
+  files:
+  - installer_1:
+      url: https://ao.igg.com/download/download_link.php?id=117
+      filename: ao_part_1.zip
+  - installer_2:
+      url: https://ao.igg.com/download/download_link.php?id=41
+      filename: ao_part_2.zip
+  game:
+    exe: $GAMEDIR/drive_c/Program Files/Angels Online/START.EXE
+    prefix: $GAMEDIR
+    arch: win32
+    working_dir: $GAMEDIR/drive_c/Program Files/Angels Online/
+  installer:
+  - task:
+      arch: win32
+      description: Setting up wine prefix
+      install_mono: false
+      name: create_prefix
+      prefix: $GAMEDIR
+  - extract:
+      file: installer_1
+      dst: $CACHE/ao_installers/part_1/
+  - extract:
+      file: installer_2
+      dst: $CACHE/ao_installers/part_2/
+  - execute:
+      command: 'mv $CACHE/ao_installers/part_2/* $CACHE/ao_installers/part_1/'
+  - execute:
+      command: 'mv $CACHE/ao_installers/part_1/*.exe $CACHE/ao_installers/part_1/installer.exe'
+  - execute:
+      command: 'for i in $CACHE/ao_installers/part_1/*.bin; do name=$(basename $i); mv ${i} "$CACHE/ao_installers/part_1/installer-${name#*-}"; done'
+  - task:
+      executable: $CACHE/ao_installers/part_1/installer.exe
+      arch: win32
+      name: wineexec
+      prefix: $GAMEDIR
