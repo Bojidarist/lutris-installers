@@ -1,0 +1,38 @@
+name: DKGenesis
+game_slug: DKGenesis
+version: Installer
+slug: DKGenesisInstaller
+description: DKGenesis Installer
+runner: wine
+
+script:
+  files:
+    - game_files:
+        url: https://dkgenesis.com/down/englishbeta
+        filename: dkgenesis_en.zip
+  game:
+    exe: $GAMEDIR/drive_c/Program Files/DKGenesis/UPDATER.exe
+    prefix: $GAMEDIR
+    arch: win32
+    working_dir: $GAMEDIR/drive_c/Program Files/DKGenesis/
+  installer:
+    - task:
+        arch: win32
+        description: Setting up wine prefix
+        install_mono: false
+        install_gecko: false
+        name: create_prefix
+        prefix: $GAMEDIR
+    - task:
+        app: d3dcompiler_43 d3dx9_43 vcrun2019
+        arch: win32
+        description: Installing components
+        name: winetricks
+        prefix: $GAMEDIR
+    - extract:
+        file: game_files
+        dst: $GAMEDIR/drive_c/Program Files/DKGenesis/
+  wine:
+    version: lutris-GE-Proton7-43-x86_64
+    overrides:
+      mshtml.dll: disabled
