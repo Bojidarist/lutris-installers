@@ -5,3 +5,5 @@ Repository containing my Lutris install scripts.
 - GodsWar Online
 - Steins;Gate: Linear Bounded Phenogram
 - Chronobox
+- Angels Online
+- DKGenesis
